@@ -15,29 +15,34 @@ export const loginUser = (email, password) => async dispatch => {
       password,
     });
 
-    console.log("res from redux == >", response)
+    const user = response.data.user;
+    const token = response.data.token;
 
-    if (response.status === 200) {
-      const user = response.data.user;
-      const token = response.data.token;
+    dispatch({
+      type: LOGIN_SUCCESS,
+      payload: { user, token },
+    });
 
-      dispatch({
-        type: LOGIN_SUCCESS,
-        payload: { user, token },
-      });
-      return { success: true, user, token };
-    } else {
-      dispatch({
-        type: LOGIN_FAILURE,
-        payload: response.data.message || 'Login failed',
-      });
-    }
+    return {
+      success: true,
+      status: response.status,
+      data: response.data
+    };
+
   } catch (error) {
+
     const errorMsg = error.response?.data?.message || 'Something went wrong';
+
     dispatch({
       type: LOGIN_FAILURE,
       payload: errorMsg,
     });
+
+    return {
+      success: false,
+      status: error.response?.status,
+      data: error.response?.data
+    };
   }
 };
 

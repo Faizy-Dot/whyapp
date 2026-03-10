@@ -19,42 +19,61 @@ export default function LoginScreen() {
   const [showPassowrd, setShowPassword] = useState(false)
   const dispatch = useDispatch();
 
-  const { user } = useSelector(state => state.login);
-  
-  console.log("user==>>", user)
+  const { user, loading } = useSelector(state => state.login);
+
   // 👇 API Call for Login
 
-const handleLogin = async () => {
- console.log("heloooooo")
-  // if (!email || !password) {
-  //   Toast.show({
-  //     type: 'error',
-  //     text1: 'Error',
-  //     text2: 'Please enter email and password',
-  //   });
-  //   return;
-  // }
+  const handleLogin = async () => {
+    if (!email || !password) {
+      Toast.show({
+        type: 'error',
+        text1: 'Error',
+        text2: 'Please enter email and password',
+      });
+      return;
+    }
 
-  // try {
-  //   const response = await dispatch(loginUser(email, password));
-  //   console.log("response==>>", response);
+    try {
+      console.log("loading==>>", loading)
 
-  //   Toast.show({
-  //     type: 'success',
-  //     text1: 'Login Successful',
-  //     text2: 'Welcome back 👋',
-  //   });
+      const response = await dispatch(loginUser(email, password));
+      console.log("response==>>", response);
 
-  // } catch (err) {
-  //   console.log("Err", err);
+      if (response?.status === 200) {
+        Toast.show({
+          type: 'success',
+          text1: response.data.message,
+          text2: 'Welcome back 👋',
+        });
+      }
 
-  //   Toast.show({
-  //     type: 'error',
-  //     text1: 'Login Failed',
-  //     text2: 'Something went wrong',
-  //   });
-  // }
-};
+        if (response?.status === 400) {
+        Toast.show({
+          type: 'error',
+          text1: response.data.message,
+          text2: 'Something went wrong',
+        });
+      }
+
+        if (response?.status === undefined && response?.data === undefined) {
+        Toast.show({
+          type: 'error',
+          text1: "Network Problem Plz Try Again",
+          text2: 'Something went wrong',
+        });
+      }
+  
+
+    } catch (err) {
+      console.log("Err", err);
+
+      Toast.show({
+        type: 'error',
+        text1: 'Login Failed',
+        text2: 'Something went wrong',
+      });
+    }
+  };
 
   return (
     <View style={styles.container}>
