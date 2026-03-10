@@ -8,6 +8,7 @@ import { loginUser } from '../../../redux/actions/loginAction';
 import axiosInstance from '../../../config/axios';
 import Toast from 'react-native-toast-message';
 import AntDesign from "react-native-vector-icons/AntDesign";
+import { ActivityIndicator } from 'react-native-paper';
 
 
 export default function LoginScreen() {
@@ -34,7 +35,6 @@ export default function LoginScreen() {
     }
 
     try {
-      console.log("loading==>>", loading)
 
       const response = await dispatch(loginUser(email, password));
       console.log("response==>>", response);
@@ -47,7 +47,7 @@ export default function LoginScreen() {
         });
       }
 
-        if (response?.status === 400) {
+      if (response?.status === 400) {
         Toast.show({
           type: 'error',
           text1: response.data.message,
@@ -55,14 +55,14 @@ export default function LoginScreen() {
         });
       }
 
-        if (response?.status === undefined && response?.data === undefined) {
+      if (response?.status === undefined && response?.data === undefined) {
         Toast.show({
           type: 'error',
           text1: "Network Problem Plz Try Again",
           text2: 'Something went wrong',
         });
       }
-  
+
 
     } catch (err) {
       console.log("Err", err);
@@ -111,8 +111,20 @@ export default function LoginScreen() {
       </View>
 
       {/* Sign In Button */}
-      <TouchableOpacity onPress={handleLogin} style={styles.button}>
-        <Text style={styles.buttonText}>Sign In</Text>
+      <TouchableOpacity
+        onPress={handleLogin}
+        style={[styles.button, loading && { opacity: 0.8 }]}
+        disabled={loading}
+        activeOpacity={0.8}
+      >
+        {loading ? (
+          <View style={{display:"flex" , flexDirection : "row" , justifyContent:"center" , gap:15}}>
+          <ActivityIndicator size="small" color="#fff" />
+           <Text style={styles.buttonText}>Sign In...</Text>
+          </View>
+        ) : (
+          <Text style={styles.buttonText}>Sign In</Text>
+        )}
       </TouchableOpacity>
 
 
