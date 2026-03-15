@@ -4,7 +4,7 @@ import store from '../redux/store';
 const axiosInstance = axios.create({
 
     // baseURL: "https://whyapp.up.railway.app",
-    baseURL: "http://192.168.1.106:5000",
+    baseURL: "http://192.168.1.103:5000",
     timeout: 10000,
     headers: {
         'Content-Type': 'application/json',

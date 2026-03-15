@@ -11,10 +11,11 @@ import { useSelector } from 'react-redux';
 
 const Tab = createBottomTabNavigator();
 
-export default function AppTabsNavigator() {
+export default function AppTabsNavigator({ initialRoute = "Chats" }) {
   const {user} = useSelector(state => state.login)
   return (
     <Tab.Navigator
+     initialRouteName={initialRoute}
       screenOptions={({ route }) => ({
         header: () => <Navbar title={route.name} user={user} />,
         tabBarShowLabel: true,

@@ -16,7 +16,8 @@ const canGoBack = navigation.canGoBack();
       )}
 
       {/* Avatar + Username */}
-      <View style={styles.userInfo}>
+      <TouchableOpacity onPress={() => navigation.openDrawer()}
+ style={styles.userInfo}>
         {user?.avatar ? (
           <Image source={{ uri: user.avatar }} style={styles.avatar} />
         ) : (
@@ -27,7 +28,7 @@ const canGoBack = navigation.canGoBack();
           </View>
         )}
         <Text style={styles.username}>{user?.username || title}</Text>
-      </View>
+      </TouchableOpacity>
       <View>
         <Text style={styles.title}>{title}</Text>
       </View>

@@ -3,9 +3,10 @@ import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import { LoginScreen, RegisterScreen } from './src/screens';
 import { Provider, useSelector } from 'react-redux';
 import store from './src/redux/store';
-import AppTabsNavigator from './src/screens/appTab/AppTabsNavigator';
 import ChatingScreen from './src/screens/chating/ChatingScreen';
 import Toast from 'react-native-toast-message';
+import AppDrawer from "./src/screens/appTab/AppDrawer"
+
 
 const Stack = createNativeStackNavigator();
 
@@ -17,7 +18,7 @@ function RootNavigator() {
     <Stack.Navigator screenOptions={{ headerShown: false }}>
       {user ? (
         <>
-          <Stack.Screen name="AppTabs" component={AppTabsNavigator} />
+          <Stack.Screen name="AppTabs" component={AppDrawer} />
           <Stack.Screen name='Chating' component={ChatingScreen} />
         </>
       ) : (
