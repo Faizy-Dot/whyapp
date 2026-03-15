@@ -11,7 +11,7 @@ export default function CustomDrawer({ navigation }) {
   return (
     <View style={styles.container}>
 
-        <Image source={require("../assets/playstore-icon.png")}  style={{ width: 60, height: 60 }}/>
+        <Image source={require("../assets/bg-remove.png")}  style={{ width: 60, height: 60 }}/>
 
       <TouchableOpacity onPress={() => navigateTab("Chats")}>
         <Text style={styles.item}>Chats</Text>
@@ -48,6 +48,7 @@ const styles = StyleSheet.create({
     flex: 1,
     paddingTop: 60,
     paddingLeft: 20,
+    backgroundColor:"#fffced"
   },
   item: {
     fontSize: 18,
