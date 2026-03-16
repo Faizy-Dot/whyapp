@@ -1,7 +1,18 @@
 import React from "react";
 import { View, Text, TouchableOpacity, StyleSheet, Image } from "react-native";
+import { useDispatch } from 'react-redux';
+import { logoutUser } from '../redux/actions/loginAction';
+
+
+
 
 export default function CustomDrawer({ navigation }) {
+
+  const dispatch = useDispatch();
+
+  const handleLogout = () => {
+    dispatch(logoutUser());
+  };
 
   const navigateTab = (screen) => {
     navigation.navigate("HomeTabs", { screen });
@@ -11,7 +22,7 @@ export default function CustomDrawer({ navigation }) {
   return (
     <View style={styles.container}>
 
-        <Image source={require("../assets/bg-remove.png")}  style={{ width: 60, height: 60 }}/>
+      <Image source={require("../assets/bg-remove.png")} style={{ width: 60, height: 60 }} />
 
       <TouchableOpacity onPress={() => navigateTab("Chats")}>
         <Text style={styles.item}>Chats</Text>
@@ -35,7 +46,7 @@ export default function CustomDrawer({ navigation }) {
 
       <View style={styles.divider} />
 
-      <TouchableOpacity>
+      <TouchableOpacity onPress={handleLogout}>
         <Text style={styles.logout}>Logout</Text>
       </TouchableOpacity>
 
@@ -48,7 +59,7 @@ const styles = StyleSheet.create({
     flex: 1,
     paddingTop: 60,
     paddingLeft: 20,
-    backgroundColor:"#fffced"
+    backgroundColor: "#fffced"
   },
   item: {
     fontSize: 18,

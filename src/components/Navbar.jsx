@@ -5,11 +5,11 @@ import { useNavigation } from "@react-navigation/native";
 
 export default function Navbar({ title, user, showBack = false }) {
   const navigation = useNavigation();
-const canGoBack = navigation.canGoBack();
+  const canGoBack = navigation.canGoBack();
   return (
     <View style={styles.header}>
 
-       {(showBack || canGoBack) && (
+      {(showBack || canGoBack) && (
         <TouchableOpacity style={styles.backBtn} onPress={() => navigation.goBack()}>
           <Icon name="arrow-back" size={24} color="white" />
         </TouchableOpacity>
@@ -17,7 +17,7 @@ const canGoBack = navigation.canGoBack();
 
       {/* Avatar + Username */}
       <TouchableOpacity onPress={() => navigation.openDrawer()}
- style={styles.userInfo}>
+        style={styles.userInfo}>
         {user?.avatar ? (
           <Image source={{ uri: user.avatar }} style={styles.avatar} />
         ) : (
@@ -44,12 +44,12 @@ const styles = StyleSheet.create({
     paddingVertical: 12,
     paddingHorizontal: 15,
   },
- 
+
   userInfo: {
     flexDirection: "row",
     alignItems: "center",
     flex: 1,
-    marginLeft : 10
+    marginLeft: 10
   },
   avatar: {
     width: 36,
@@ -72,8 +72,8 @@ const styles = StyleSheet.create({
     fontWeight: "600",
     color: "#fff",
   },
-  title :{
-     fontSize: 18,
+  title: {
+    fontSize: 18,
     fontWeight: "600",
     color: "#fff",
   },

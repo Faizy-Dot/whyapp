@@ -1,15 +1,20 @@
+import Toast from 'react-native-toast-message';
 import axiosInstance from '../../config/axios';
 
 // Action Types
 export const LOGIN_REQUEST = 'LOGIN_REQUEST';
 export const LOGIN_SUCCESS = 'LOGIN_SUCCESS';
 export const LOGIN_FAILURE = 'LOGIN_FAILURE';
+export const LOGOUT = 'LOGOUT';
 
-// Action Creator (Thunk)
+
+// LOGIN ACTION
 export const loginUser = (email, password) => async dispatch => {
+
   dispatch({ type: LOGIN_REQUEST });
 
   try {
+
     const response = await axiosInstance.post('/auth/login', {
       email,
       password,
@@ -47,6 +52,17 @@ export const loginUser = (email, password) => async dispatch => {
 };
 
 
+// LOGOUT ACTION
+export const logoutUser = () => dispatch => {
+  dispatch({ type: LOGOUT });
+   Toast.show({
+            type: 'success',
+            text1: 'Logout Successful',
+          });
+};
+
+
+// INITIAL STATE
 const initialState = {
   loading: false,
   user: null,
@@ -54,10 +70,18 @@ const initialState = {
   error: null,
 };
 
+
+// REDUCER
 const loginReducer = (state = initialState, action) => {
+
   switch (action.type) {
+
     case LOGIN_REQUEST:
-      return { ...state, loading: true, error: null };
+      return {
+        ...state,
+        loading: true,
+        error: null,
+      };
 
     case LOGIN_SUCCESS:
       return {
@@ -69,7 +93,20 @@ const loginReducer = (state = initialState, action) => {
       };
 
     case LOGIN_FAILURE:
-      return { ...state, loading: false, error: action.payload };
+      return {
+        ...state,
+        loading: false,
+        error: action.payload,
+      };
+
+    case LOGOUT:
+      return {
+        ...state,
+        loading: false,
+        user: null,
+        token: null,
+        error: null,
+      };
 
     default:
       return state;
